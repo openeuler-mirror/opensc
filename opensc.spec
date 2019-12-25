@@ -1,25 +1,23 @@
 %define opensc_module "OpenSC PKCS #11 Module"
 %define nssdb %{_sysconfdir}/pki/nssdb
 
-Name: opensc
-Version: 0.19.0
-Release: 3
-License: LGPLv2.1+
-URL: https://github.com/OpenSC/OpenSC/wiki
-Source0: https://github.com/OpenSC/OpenSC/releases/download/%{version}/%{name}-%{version}.tar.gz
-Source1: opensc.module
-Patch0: opensc-0.19.0-rsa-pss.patch
-Summary: Smart card library and applications
+Name:            opensc
+Version:         0.19.0
+Release:         4
+License:         LGPLv2.1+
+Summary:         Smart card library and applications
+URL:             https://github.com/OpenSC/OpenSC/wiki
+Source0:         https://github.com/OpenSC/OpenSC/releases/download/%{version}/%{name}-%{version}.tar.gz
+Source1:         opensc.module
+Patch0:          opensc-0.19.0-rsa-pss.patch
+Patch6000:       CVE-2019-6502.patch
 
-BuildRequires: openssl-devel pcsc-lite-devel bash-completion
-BuildRequires: docbook-style-xsl readline-devel
-BuildRequires: desktop-file-utils
-BuildRequires: /usr/bin/xsltproc
-BuildRequires: autoconf automake libtool gcc
-Requires: pcsc-lite
-Obsoletes: coolkey <= 1.1.0-36
-Obsoletes: mozilla-opensc-signer < 0.12.0
-Obsoletes: opensc-devel < 0.12.0
+BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
+BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
+Requires:        pcsc-lite
+Obsoletes:       coolkey <= 1.1.0-36
+Obsoletes:       mozilla-opensc-signer < 0.12.0
+Obsoletes:       opensc-devel < 0.12.0
 
 %description
 OpenSC provides a set of libraries and utilities to work with smart cards.
@@ -29,15 +27,10 @@ mail encryption and digital signatures. OpenSC implements the standard
 APIs to smart cards, e.g. PKCS#11 API, Windows’ Smart Card Minidriver
 and macOS Tokend.
 
-%package help
-Summary: Include man page in help package.
-
-%description help
-This package provides INFO, HTML and user manual for opensc.
+%package_help
 
 %prep
-%setup -q
-%patch0 -p1 -b .pss
+%autosetup -n %{name}-%{version} -p1
 
 sed -i -e 's|/usr/local/towitoko/lib/|/usr/lib/ctapi/|' etc/opensc.conf.example.in
 cp -p src/pkcs15init/README ./README.pkcs15init
@@ -137,6 +130,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/org.opensc.notify.de
 %{_datadir}/p11-kit/modules/opensc.module
 
 %changelog
+* Mon Dec 16 2019 openEuler Buildteam <buildteam@openeuler.org> - 0.19.0-4
+- Fix CVE-2019-6502
+
 * Fri Sep 27 2019 openEuler Buildteam <buildteam@openeuler.org> - 0.19.0-3
 - Adjust requires
 
