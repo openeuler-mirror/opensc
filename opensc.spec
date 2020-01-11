@@ -2,15 +2,12 @@
 %define nssdb %{_sysconfdir}/pki/nssdb
 
 Name:            opensc
-Version:         0.19.0
-Release:         4
+Version:         0.20.0
+Release:         1
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
 Source0:         https://github.com/OpenSC/OpenSC/releases/download/%{version}/%{name}-%{version}.tar.gz
-Source1:         opensc.module
-Patch0:          opensc-0.19.0-rsa-pss.patch
-Patch6000:       CVE-2019-6502.patch
 
 BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
 BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
@@ -51,7 +48,6 @@ make %{?_smp_mflags} V=1
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/opensc.conf
-install -Dpm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/p11-kit/modules/opensc.module
 install -Dpm 644 etc/opensc.conf $RPM_BUILD_ROOT%{_sysconfdir}/opensc-%{_arch}.conf
 touch -r NEWS $RPM_BUILD_ROOT%{_sysconfdir}/opensc-%{_arch}.conf
 find $RPM_BUILD_ROOT%{_libdir} -type f -name "*.la" | xargs rm
@@ -103,6 +99,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/org.opensc.notify.de
 %{_bindir}/eidenv
 %{_bindir}/iasecc-tool
 %{_bindir}/gids-tool
+%{_bindir}/goid-tool
 %{_bindir}/netkey-tool
 %{_bindir}/openpgp-tool
 %{_bindir}/opensc-explorer
@@ -111,6 +108,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/org.opensc.notify.de
 %{_bindir}/opensc-notify
 %{_bindir}/piv-tool
 %{_bindir}/pkcs11-tool
+%{_bindir}/pkcs11-register
 %{_bindir}/pkcs15-crypt
 %{_bindir}/pkcs15-init
 %{_bindir}/pkcs15-tool
@@ -124,12 +122,15 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/org.opensc.notify.de
 %{_libdir}/pkcs11/opensc-pkcs11.so
 %{_libdir}/pkcs11/onepin-opensc-pkcs11.so
 %{_libdir}/pkcs11/pkcs11-spy.so
-%%dir %{_libdir}/pkcs11
+%dir %{_libdir}/pkcs11
 %{_datadir}/applications/org.opensc.notify.desktop
 %{_datadir}/opensc/
-%{_datadir}/p11-kit/modules/opensc.module
+%{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Sat Jan 11 2020 openEuler Buildteam <buildteam@openeuler.org> - 0.20.0-1
+- Update to 0.20.0
+
 * Mon Dec 16 2019 openEuler Buildteam <buildteam@openeuler.org> - 0.19.0-4
 - Fix CVE-2019-6502
 
