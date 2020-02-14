@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.20.0
-Release:         1
+Release:         2
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -58,6 +58,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libopensc.so
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/opensc
 
 desktop-file-validate %{buildroot}/%{_datadir}/applications/org.opensc.notify.desktop
+
+%check
+make check
 
 %post
 /sbin/ldconfig
@@ -128,6 +131,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/org.opensc.notify.de
 %{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Fri Feb 14 2020 openEuler Buildteam <buildteam@openeuler.org> - 0.20.0-2
+- Make check after installation
+
 * Sat Jan 11 2020 openEuler Buildteam <buildteam@openeuler.org> - 0.20.0-1
 - Update to 0.20.0
 
