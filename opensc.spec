@@ -3,11 +3,13 @@
 
 Name:            opensc
 Version:         0.20.0
-Release:         3
+Release:         4
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
 Source0:         https://github.com/OpenSC/OpenSC/releases/download/%{version}/%{name}-%{version}.tar.gz
+
+Patch0:          myeid-fixed-memory-leak.patch
 
 BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
 BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
@@ -131,6 +133,9 @@ make check
 %{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Mon Sep 21 2020 liquor <lirui130@huawei.com> - 0.20.0-4
+- myeid: fixed memory leak
+
 * Tue Aug 18 2020 liquor <lirui130@huawei.com> - 0.20.0-3
 - rebuild for requirement package update
 
