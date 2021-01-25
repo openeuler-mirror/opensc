@@ -2,16 +2,13 @@
 %define nssdb %{_sysconfdir}/pki/nssdb
 
 Name:            opensc
-Version:         0.20.0
-Release:         6
+Version:         0.21.0
+Release:         1
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
 Source0:         https://github.com/OpenSC/OpenSC/releases/download/%{version}/%{name}-%{version}.tar.gz
 
-Patch0:          myeid-fixed-memory-leak.patch
-Patch1:          backport-CVE-2020-26570-Heap-buffer-overflow-WRITE.patch
-Patch2:          backport-CVE-2020-26571-fixed-invalid-read.patch 
 
 BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
 BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
@@ -60,6 +57,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libsmm-local.so
 rm -rf %{buildroot}%{_bindir}/npa-tool
 rm -f $RPM_BUILD_ROOT%{_libdir}/libopensc.so
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/opensc
+rm -rf %{buildroot}%{_bindir}/pkcs11-register
+rm -rf %{buildroot}%{_mandir}/man1/pkcs11-register.1*
 
 desktop-file-validate %{buildroot}/%{_datadir}/applications/org.opensc.notify.desktop
 
@@ -79,6 +78,7 @@ make check
 %{_mandir}/man1/egk-tool.1*
 %{_mandir}/man1/eidenv.1*
 %{_mandir}/man1/gids-tool.1*
+%{_mandir}/man1/goid-tool.1*
 %{_mandir}/man1/iasecc-tool.1*
 %{_mandir}/man1/netkey-tool.1*
 %{_mandir}/man1/openpgp-tool.1*
@@ -115,7 +115,6 @@ make check
 %{_bindir}/opensc-notify
 %{_bindir}/piv-tool
 %{_bindir}/pkcs11-tool
-%{_bindir}/pkcs11-register
 %{_bindir}/pkcs15-crypt
 %{_bindir}/pkcs15-init
 %{_bindir}/pkcs15-tool
@@ -135,6 +134,9 @@ make check
 %{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Mon Jan 25 2021 zoulin <zoulin13@huawei.com> - 0.21.0-1
+- Update to 0.21.0
+
 * Sat Jan 23 2021 zoulin <zoulin13@huawei.com> - 0.20.0-6
 - fix CVE-2020-26571
 
