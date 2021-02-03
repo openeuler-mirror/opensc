@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.20.0
-Release:         5
+Release:         6
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -12,6 +12,7 @@ Source0:         https://github.com/OpenSC/OpenSC/releases/download/%{version}/%
 Patch0:          myeid-fixed-memory-leak.patch
 Patch1:          backport-CVE-2020-26570-Heap-buffer-overflow-WRITE.patch
 Patch2:          backport-CVE-2020-26571-fixed-invalid-read.patch
+Patch3:          backport-CVE-2020-26572-prevent-out-of-bounds-write.patch
 
 BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
 BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
@@ -135,6 +136,9 @@ make check
 %{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Wed Feb 3 2021 Hugel <gengqhu1@huawei.com> - 0.20.0-6
+- fix CVE-2020-26572
+
 * Sat Jan 23 2021 zoulin <zoulin13@huawei.com> - 0.20.0-5
 - fix CVE-2020-26571
 
