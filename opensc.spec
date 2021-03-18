@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.21.0
-Release:         1
+Release:         2
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -59,6 +59,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libopensc.so
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/opensc
 rm -rf %{buildroot}%{_bindir}/pkcs11-register
 rm -rf %{buildroot}%{_mandir}/man1/pkcs11-register.1*
+rm -rf %{buildroot}%{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 desktop-file-validate %{buildroot}/%{_datadir}/applications/org.opensc.notify.desktop
 
@@ -131,9 +132,11 @@ make check
 %dir %{_libdir}/pkcs11
 %{_datadir}/applications/org.opensc.notify.desktop
 %{_datadir}/opensc/
-%{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Thu Mar 18 2021 Hugel <gengqihu1@huawei.com> - 0.21.0-2
+- Remove unused file pkcs11-register.desktop
+
 * Mon Jan 25 2021 zoulin <zoulin13@huawei.com> - 0.21.0-1
 - Update to 0.21.0
 
