@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.20.0
-Release:         6
+Release:         7
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -13,6 +13,17 @@ Patch0:          myeid-fixed-memory-leak.patch
 Patch1:          backport-CVE-2020-26570-Heap-buffer-overflow-WRITE.patch
 Patch2:          backport-CVE-2020-26571-fixed-invalid-read.patch
 Patch3:          backport-CVE-2020-26572-prevent-out-of-bounds-write.patch
+Patch4:          iasecc-Avoid-another-memory-leak.patch
+Patch5:          card-Correctly-free-pointers-durint-cache-invalidati.patch 
+Patch6:          oberthur-Free-another-read-data-on-failure-paths.patch
+Patch7:          oberthur-Avoid-two-buffer-overflows.patch
+Patch8:          oberthur-Handle-more-memory-issues-during-initializa.patch
+Patch9:          oberthur-Fix-memory-leaks.patch
+Patch10:         oberthur-Avoid-memory-leaks.patch
+Patch11:         oberthur-fixed-Heap-buffer-overflow.patch
+Patch12:         oberthur-One-more-overlooked-buffer-overflow.patch
+Patch13:         cardos-Correctly-calculate-the-left-bytes-to-avoid-b.patch
+Patch14:         oberthur-Handle-1B-OIDs.patch 
 
 BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
 BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
@@ -136,6 +147,9 @@ make check
 %{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Thu Aug 19 2021 zoulin <zoulin13@huawei.com> - 0.20.0-7
+- fix more oss-fuzz
+
 * Wed Feb 3 2021 Hugel <gengqihu1@huawei.com> - 0.20.0-6
 - fix CVE-2020-26572
 
