@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.21.0
-Release:         2
+Release:         3
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -16,6 +16,19 @@ Requires:        pcsc-lite
 Obsoletes:       coolkey <= 1.1.0-36
 Obsoletes:       mozilla-opensc-signer < 0.12.0
 Obsoletes:       opensc-devel < 0.12.0
+
+Patch0:   iasecc-Avoid-another-memory-leak.patch
+Patch1:   card-Correctly-free-pointers-durint-cache-invalidati.patch
+Patch2:   oberthur-Free-another-read-data-on-failure-paths.patch
+Patch3:   oberthur-Avoid-two-buffer-overflows.patch
+Patch4:   oberthur-Handle-more-memory-issues-during-initializa.patch
+Patch5:   oberthur-Fix-memory-leaks.patch
+Patch6:   oberthur-Correctly-check-for-return-values.patch
+Patch7:   oberthur-Avoid-memory-leaks.patch
+Patch8:   oberthur-fixed-Heap-buffer-overflow.patch
+Patch9:   oberthur-One-more-overlooked-buffer-overflow.patch
+Patch10:  cardos-Correctly-calculate-the-left-bytes-to-avoid-b.patch
+Patch11:  oberthur-Handle-1B-OIDs.patch
 
 %description
 OpenSC provides a set of libraries and utilities to work with smart cards.
@@ -134,6 +147,9 @@ make check
 %{_datadir}/opensc/
 
 %changelog
+* Thu Aug 19 2021 zoulin <zoulin13@huawei.com> - 0.21.0-3
+- fix more oss-fuzz
+
 * Thu Mar 18 2021 Hugel <gengqihu1@huawei.com> - 0.21.0-2
 - Remove unused file pkcs11-register.desktop
 
