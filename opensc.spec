@@ -2,8 +2,8 @@
 %define nssdb %{_sysconfdir}/pki/nssdb
 
 Name:            opensc
-Version:         0.21.0
-Release:         2
+Version:         0.22.0
+Release:         1
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -44,7 +44,7 @@ sed -i -e 's|"/lib /usr/lib\b|"/%{_lib} %{_libdir}|' configure # lib64 rpaths
   --enable-sm \
   --enable-pcsc \
   --with-pcsc-provider=libpcsclite.so.1
-make %{?_smp_mflags} V=1
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -134,6 +134,9 @@ make check
 %{_datadir}/opensc/
 
 %changelog
+* Thu Aug 19 2021 zoulin <zoulin13@huawei.com> - 0.22.0-1
+- Update version to 0.22.0
+
 * Thu Mar 18 2021 Hugel <gengqihu1@huawei.com> - 0.21.0-2
 - Remove unused file pkcs11-register.desktop
 
