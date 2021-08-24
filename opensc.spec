@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.20.0
-Release:         7
+Release:         8
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -24,6 +24,7 @@ Patch11:         oberthur-fixed-Heap-buffer-overflow.patch
 Patch12:         oberthur-One-more-overlooked-buffer-overflow.patch
 Patch13:         cardos-Correctly-calculate-the-left-bytes-to-avoid-b.patch
 Patch14:         oberthur-Handle-1B-OIDs.patch 
+Patch15:         Fix-ACLs-support.patch
 
 BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
 BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
@@ -147,6 +148,9 @@ make check
 %{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Tue Aug 24 2021 wangjie <wangjie375@huawei.com> - 0.20.0-8
+- fix oss-fuzz
+
 * Thu Aug 19 2021 zoulin <zoulin13@huawei.com> - 0.20.0-7
 - fix more oss-fuzz
 
