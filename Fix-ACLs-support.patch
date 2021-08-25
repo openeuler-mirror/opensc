@@ -1,0 +1,70 @@
+From b18234a7d9a2d63df1f1df6fa31a2b81447ede46 Mon Sep 17 00:00:00 2001
+From: Vincent JARDIN <vjardin+github@free.fr>
+Date: Mon, 22 Mar 2021 13:08:28 +0100
+Subject: [PATCH] iasecc: Fix ACLs support when length is 6 (#2264)
+
+* IASECC: offset is a size_t
+
+Let's use a size_t for the offset in order to have a proper logic
+along with the related arithmetics.
+
+Fix: part if issue #2262
+Suggested-by: Frank Morgner <frankmorgner@gmail.com>
+
+* iasecc: Fix ACLs support when length is 6
+
+ACLs with length < 6 are allowed, depending on the mask of the offset 0.
+For instance, when the offset 0 is 0x7B, then length can be up to 7
+when the offset 0 is 0x7A, the loop was never performing any access to
+the acls[7] thanks to:
+  if (!(mask & acls[0]))
+    continue;
+
+However, the oss-fuzz tools cannot guess such behavior. So let's have a
+robust boundary check.
+
+Fix: issue #2262
+Fix: ae1cf0be90396f 'Prevent stack buffer overflow when empty ACL is returned'
+
+Co-authored-by: Vincent JARDIN <vjardin@free.fr>
+Co-authored-by: Frank Morgner <frankmorgner@gmail.com>
+Reference: https://github.com/OpenSC/OpenSC/commit/b18234a7d9a2d63df1f1df6fa31a2b81447ede46
+---
+ src/libopensc/card-iasecc.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/src/libopensc/card-iasecc.c b/src/libopensc/card-iasecc.c
+index 07a99f8..c4754de 100644
+--- a/src/libopensc/card-iasecc.c
++++ b/src/libopensc/card-iasecc.c
+@@ -1125,8 +1125,8 @@ iasecc_process_fci(struct sc_card *card, struct sc_file *file,
+ 		 const unsigned char *buf, size_t buflen)
+ {
+ 	struct sc_context *ctx = card->ctx;
+-	size_t taglen;
+-	int rv, ii, offs;
++	size_t taglen, offs, ii;
++	int rv;
+ 	const unsigned char *acls = NULL, *tag = NULL;
+ 	unsigned char mask;
+ 	unsigned char ops_DF[7] = {
+@@ -1182,10 +1182,15 @@ iasecc_process_fci(struct sc_card *card, struct sc_file *file,
+ 	for (ii = 0; ii < 7; ii++, mask /= 2)  {
+ 		unsigned char op = file->type == SC_FILE_TYPE_DF ? ops_DF[ii] : ops_EF[ii];
+ 
++		/* avoid any access to acls[offs] beyond the taglen */
++		if (offs >= taglen) {
++			sc_log(ctx, "Warning: Invalid offset reached during ACL parsing");
++			break;
++		}
+ 		if (!(mask & acls[0]))
+ 			continue;
+ 
+-		sc_log(ctx, "ACLs mask 0x%X, offs %i, op 0x%X, acls[offs] 0x%X", mask, offs, op, acls[offs]);
++		sc_log(ctx, "ACLs mask 0x%X, offs %"SC_FORMAT_LEN_SIZE_T"u, op 0x%X, acls[offs] 0x%X", mask, offs, op, acls[offs]);
+ 		if (op == 0xFF)   {
+ 			;
+ 		}
+-- 
+2.27.0
+
