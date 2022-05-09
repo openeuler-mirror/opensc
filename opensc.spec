@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.21.0
-Release:         5
+Release:         6
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -27,12 +27,16 @@ Patch6:   oberthur-Correctly-check-for-return-values.patch
 Patch7:   oberthur-Avoid-memory-leaks.patch
 Patch8:   oberthur-fixed-Heap-buffer-overflow.patch
 Patch9:   oberthur-One-more-overlooked-buffer-overflow.patch
-Patch10:  cardos-Correctly-calculate-the-left-bytes-to-avoid-b.patch
-Patch11:  oberthur-Handle-1B-OIDs.patch
-Patch12:  Fix-ACLs-support.patch
-Patch13:  backport-CVE-2021-42778-idprime-Use-temporary.patch
-Patch14:  backport-tcos-Reformat-insert_pin-for-readability.patch
-Patch15:  backport-CVE-2021-42780-tcos-Check-bounds-in-insert_pin.patch
+Patch10:  oberthur-Handle-1B-OIDs.patch
+Patch11:  Fix-ACLs-support.patch
+Patch12:  backport-CVE-2021-42778-idprime-Use-temporary.patch
+Patch13:  backport-tcos-Reformat-insert_pin-for-readability.patch
+Patch14:  backport-CVE-2021-42780-tcos-Check-bounds-in-insert_pin.patch
+Patch15:  backport-0001-CVE-2021-42782-tcos-prevent-out-of-bounds-read.patch
+Patch16:  backport-0002-CVE-2021-42782-coolkey-Initialize-potentially.patch
+Patch17:  backport-0003-CVE-2021-42782-cardos-Correctly-calculate-the-left.patch
+Patch18:  backport-0004-CVE-2021-42782-iasecc-Prevent-stack-buffer.patch
+Patch19:  backport-0005-CVE-2021-42782-PIV-Improved-parsing.patch
 
 %description
 OpenSC provides a set of libraries and utilities to work with smart cards.
@@ -151,6 +155,9 @@ make check
 %{_datadir}/opensc/
 
 %changelog
+* Mon May 9 2022 Hugel <gengqihu1@h-partners.com> - 0.21.0-6
+- fix CVE-2021-42782
+
 * Mon May 9 2022 Hugel <gengqihu1@h-partners.com> - 0.21.0-5
 - fix CVE-2021-42778 CVE-2021-42780
 
