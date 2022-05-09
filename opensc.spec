@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.21.0
-Release:         4
+Release:         5
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -30,6 +30,9 @@ Patch9:   oberthur-One-more-overlooked-buffer-overflow.patch
 Patch10:  cardos-Correctly-calculate-the-left-bytes-to-avoid-b.patch
 Patch11:  oberthur-Handle-1B-OIDs.patch
 Patch12:  Fix-ACLs-support.patch
+Patch13:  backport-CVE-2021-42778-idprime-Use-temporary.patch
+Patch14:  backport-tcos-Reformat-insert_pin-for-readability.patch
+Patch15:  backport-CVE-2021-42780-tcos-Check-bounds-in-insert_pin.patch
 
 %description
 OpenSC provides a set of libraries and utilities to work with smart cards.
@@ -148,6 +151,9 @@ make check
 %{_datadir}/opensc/
 
 %changelog
+* Mon May 9 2022 Hugel <gengqihu1@h-partners.com> - 0.21.0-5
+- fix CVE-2021-42778 CVE-2021-42780
+
 * Tue Aug 24 2021 wangjie <wangjie375@huawei.com> - 0.21.0-4
 - fix  oss-fuzz
 
