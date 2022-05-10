@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.20.0
-Release:         9
+Release:         10
 License:         LGPLv2.1+
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -22,11 +22,17 @@ Patch9:          oberthur-Fix-memory-leaks.patch
 Patch10:         oberthur-Avoid-memory-leaks.patch
 Patch11:         oberthur-fixed-Heap-buffer-overflow.patch
 Patch12:         oberthur-One-more-overlooked-buffer-overflow.patch
-Patch13:         cardos-Correctly-calculate-the-left-bytes-to-avoid-b.patch
-Patch14:         oberthur-Handle-1B-OIDs.patch 
-Patch15:         Fix-ACLs-support.patch
-Patch16:         backport-tcos-Reformat-insert_pin-for-readability.patch
-Patch17:         backport-CVE-2021-42780-tcos-Check-bounds-in-insert_pin.patch
+Patch13:         oberthur-Handle-1B-OIDs.patch 
+Patch14:         Fix-ACLs-support.patch
+Patch15:         backport-tcos-Reformat-insert_pin-for-readability.patch
+Patch16:         backport-CVE-2021-42780-tcos-Check-bounds-in-insert_pin.patch
+Patch17:         backport-simplify-PIV-IO.patch
+Patch18:         backport-tcos-Reformat-insert_key.patch
+Patch19:         backport-0001-CVE-2021-42782-tcos-prevent-out-of-bounds-read.patch
+Patch20:         backport-0002-CVE-2021-42782-coolkey-Initialize-potentially.patch
+Patch21:         backport-0003-CVE-2021-42782-cardos-Correctly-calculate-the-left.patch
+Patch22:         backport-0004-CVE-2021-42782-iasecc-Prevent-stack-buffer.patch
+Patch23:         backport-0005-CVE-2021-42782-PIV-Improved-parsing.patch
 
 BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
 BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
@@ -150,6 +156,9 @@ make check
 %{_sysconfdir}/xdg/autostart/pkcs11-register.desktop
 
 %changelog
+* Mon May 9 2022 Hugel <gengqihu1@h-partners.com> - 0.20.0-10
+- fix CVE-2021-42782
+
 * Mon May 9 2022 Hugel <gengqihu1@h-partners.com> - 0.20.0-9
 - fix CVE-2021-42780
 
