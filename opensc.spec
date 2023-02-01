@@ -2,9 +2,9 @@
 %define nssdb %{_sysconfdir}/pki/nssdb
 
 Name:            opensc
-Version:         0.22.0
+Version:         0.23.0
 Release:         1
-License:         LGPLv2.1+
+License:         LGPL-2.1-or-later
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
 Source0:         https://github.com/OpenSC/OpenSC/releases/download/%{version}/%{name}-%{version}.tar.gz
@@ -12,6 +12,7 @@ Source0:         https://github.com/OpenSC/OpenSC/releases/download/%{version}/%
 
 BuildRequires:   openssl-devel pcsc-lite-devel bash-completion docbook-style-xsl readline-devel
 BuildRequires:   desktop-file-utils /usr/bin/xsltproc autoconf automake libtool gcc
+BuildRequires:	 glib2-devel
 Requires:        pcsc-lite
 Obsoletes:       coolkey <= 1.1.0-36
 Obsoletes:       mozilla-opensc-signer < 0.12.0
@@ -25,7 +26,11 @@ mail encryption and digital signatures. OpenSC implements the standard
 APIs to smart cards, e.g. PKCS#11 API, Windows’ Smart Card Minidriver
 and macOS Tokend.
 
-%package_help
+%package help
+Summary:	Development documents and examples for opensc
+Provides:	opensc-doc
+%description help
+Development documents and examples for opensc.
 
 %prep
 %autosetup -n %{name}-%{version} -p1
@@ -134,6 +139,9 @@ make check
 %{_datadir}/opensc/
 
 %changelog
+* Wed Feb 1 2023 wangjunqi <wangjunqi@kylinos.cn> - 0.23.0-1
+- update version to 0.23.0
+
 * Thu Aug 19 2021 zoulin <zoulin13@huawei.com> - 0.22.0-1
 - Update version to 0.22.0
 
