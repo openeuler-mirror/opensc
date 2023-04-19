@@ -3,7 +3,7 @@
 
 Name:            opensc
 Version:         0.23.0
-Release:         1
+Release:         2
 License:         LGPL-2.1-or-later
 Summary:         Smart card library and applications
 URL:             https://github.com/OpenSC/OpenSC/wiki
@@ -139,6 +139,9 @@ make check
 %{_datadir}/opensc/
 
 %changelog
+* Thu May 4 2023 jammyjellyfish <jammyjellyfish255@outlook.com> - 0.23.0-2
+- fix prototype warning
+
 * Wed Feb 1 2023 wangjunqi <wangjunqi@kylinos.cn> - 0.23.0-1
 - update version to 0.23.0
 
